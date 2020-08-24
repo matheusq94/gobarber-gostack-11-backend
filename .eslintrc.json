@@ -29,7 +29,13 @@
     ],
     "prettier/prettier": "error",
     "class-methods-use-this": "off",
-    "camelcase": "off"
+    "camelcase": "off",
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "_"
+      }
+    ]
   },
   "settings": {
     "import/resolver": {
