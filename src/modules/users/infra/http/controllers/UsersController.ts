@@ -1,4 +1,3 @@
-import { fr } from 'date-fns/locale';
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
