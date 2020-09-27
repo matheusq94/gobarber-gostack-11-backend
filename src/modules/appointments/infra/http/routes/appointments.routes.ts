@@ -1,23 +1,28 @@
 import { Router } from 'express';
-
-import AppointmentsRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentsRepository';
+import { celebrate, Segments, Joi } from 'celebrate';
 
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
 import AppointmentsController from '../controllers/AppointmentsController';
+import ProviderAppointmentsController from '../controllers/ProviderAppointmentsController';
 
 const appointmentsRouter = Router();
 
 appointmentsRouter.use(ensureAuthenticated);
 
 const appointmentsController = new AppointmentsController();
+const providerAppointmentsController = new ProviderAppointmentsController();
 
-appointmentsRouter.get('/', async (request, response) => {
-  const appointmentsRepository = new AppointmentsRepository();
-  const appointments = await appointmentsRepository.find();
-
-  return response.json(appointments);
-});
+appointmentsRouter.get(
+  '/me',
+  celebrate({
+    [Segments.BODY]: {
+      provider_id: Joi.string().uuid().required(),
+      date: Joi.date(),
+    },
+  }),
+  providerAppointmentsController.index,
+);
 
 appointmentsRouter.post('/', appointmentsController.create);
 
