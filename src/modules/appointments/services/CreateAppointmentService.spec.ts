@@ -1,5 +1,5 @@
 import AppError from '@shared/errors/AppError';
-import { addHours } from 'date-fns';
+// import { addHours } from 'date-fns';
 
 import FakeNotificationsRepository from '@modules/notifications/repositories/fakes/FakeNotificationsRepository';
 import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
@@ -39,7 +39,9 @@ describe('CreateAppointment', () => {
   });
 
   it('should NOT be able to create two appointments on the same time', async () => {
-    const appointmentDate = addHours(new Date(), 1);
+    const appointmentDate = new Date();
+    appointmentDate.setDate(appointmentDate.getDate() + 1);
+    appointmentDate.setHours(14, 0, 0);
 
     await createAppointment.execute({
       date: appointmentDate,
