@@ -13,7 +13,7 @@ profileRouter.use(ensureAuthenticated);
 
 profileRouter.get('/', profileController.show);
 profileRouter.put(
-  '/update',
+  '/',
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
